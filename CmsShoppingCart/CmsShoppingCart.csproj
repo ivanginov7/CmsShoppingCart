@@ -52,11 +52,47 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
       <Private>True</Private>
@@ -135,7 +171,9 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
@@ -143,22 +181,26 @@
     <Compile Include="Areas\Admin\Models\ViewModels\Shop\OrdersForAdminVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801210749189_Identity.cs" />
+    <Compile Include="Migrations\201801210749189_Identity.Designer.cs">
+      <DependentUpon>201801210749189_Identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\CategoryDTO.cs" />
-    <Compile Include="Models\Data\Db.cs" />
+    <Compile Include="Models\Data\IdentityModels.cs" />
     <Compile Include="Models\Data\OrderDetailsDTO.cs" />
     <Compile Include="Models\Data\OrderDTO.cs" />
     <Compile Include="Models\Data\PageDTO.cs" />
     <Compile Include="Models\Data\ProductDTO.cs" />
-    <Compile Include="Models\Data\RoleDTO.cs" />
     <Compile Include="Models\Data\SidebarDTO.cs" />
-    <Compile Include="Models\Data\UserDTO.cs" />
-    <Compile Include="Models\Data\UserRoleDTO.cs" />
-    <Compile Include="Models\ViewModels\Account\LoginUserVM.cs" />
+    <Compile Include="Models\ViewModels\Account\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModels\Account\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\Account\OrdersForUserVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserNavPartialVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserProfileVM.cs" />
@@ -170,9 +212,15 @@
     <Compile Include="Models\ViewModels\Shop\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Shop\ProductVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AppServices\GmailService.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CmsShoppingCart.mdf" />
+    <Content Include="App_Data\CmsShoppingCartIdentity.mdf" />
+    <Content Include="App_Data\CmsShoppingCartIdentity_log.ldf">
+      <DependentUpon>CmsShoppingCartIdentity.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\CmsShoppingCart_log.ldf">
       <DependentUpon>CmsShoppingCart.mdf</DependentUpon>
     </Content>
@@ -192,8 +240,88 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\Uploads\Products\22\blue1.jpg" />
+    <Content Include="Images\Uploads\Products\22\Gallery\blue2.jpg" />
+    <Content Include="Images\Uploads\Products\22\Gallery\blue3.png" />
+    <Content Include="Images\Uploads\Products\22\Gallery\blue4.png" />
+    <Content Include="Images\Uploads\Products\22\Gallery\Thumbs\blue2.jpg" />
+    <Content Include="Images\Uploads\Products\22\Gallery\Thumbs\blue3.png" />
+    <Content Include="Images\Uploads\Products\22\Gallery\Thumbs\blue4.png" />
+    <Content Include="Images\Uploads\Products\22\Thumbs\blue1.jpg" />
+    <Content Include="Images\Uploads\Products\23\Gallery\red2.png" />
+    <Content Include="Images\Uploads\Products\23\Gallery\red3.png" />
+    <Content Include="Images\Uploads\Products\23\Gallery\red4.png" />
+    <Content Include="Images\Uploads\Products\23\Gallery\Thumbs\red2.png" />
+    <Content Include="Images\Uploads\Products\23\Gallery\Thumbs\red3.png" />
+    <Content Include="Images\Uploads\Products\23\Gallery\Thumbs\red4.png" />
+    <Content Include="Images\Uploads\Products\23\red1.jpg" />
+    <Content Include="Images\Uploads\Products\23\Thumbs\red1.jpg" />
+    <Content Include="Images\Uploads\Products\24\Gallery\green2.png" />
+    <Content Include="Images\Uploads\Products\24\Gallery\green3.png" />
+    <Content Include="Images\Uploads\Products\24\Gallery\green4.png" />
+    <Content Include="Images\Uploads\Products\24\Gallery\Thumbs\green2.png" />
+    <Content Include="Images\Uploads\Products\24\Gallery\Thumbs\green3.png" />
+    <Content Include="Images\Uploads\Products\24\Gallery\Thumbs\green4.png" />
+    <Content Include="Images\Uploads\Products\24\green1.png" />
+    <Content Include="Images\Uploads\Products\24\Thumbs\green1.png" />
+    <Content Include="Images\Uploads\Products\25\Gallery\Thumbs\yellow2.jpg" />
+    <Content Include="Images\Uploads\Products\25\Gallery\Thumbs\yellow3.jpg" />
+    <Content Include="Images\Uploads\Products\25\Gallery\Thumbs\yellow4.jpg" />
+    <Content Include="Images\Uploads\Products\25\Gallery\yellow2.jpg" />
+    <Content Include="Images\Uploads\Products\25\Gallery\yellow3.jpg" />
+    <Content Include="Images\Uploads\Products\25\Gallery\yellow4.jpg" />
+    <Content Include="Images\Uploads\Products\25\Thumbs\yellow1.png" />
+    <Content Include="Images\Uploads\Products\25\yellow1.png" />
+    <Content Include="Images\Uploads\Products\26\Gallery\pink2.png" />
+    <Content Include="Images\Uploads\Products\26\Gallery\pink3.png" />
+    <Content Include="Images\Uploads\Products\26\Gallery\pink4.png" />
+    <Content Include="Images\Uploads\Products\26\Gallery\Thumbs\pink2.png" />
+    <Content Include="Images\Uploads\Products\26\Gallery\Thumbs\pink3.png" />
+    <Content Include="Images\Uploads\Products\26\Gallery\Thumbs\pink4.png" />
+    <Content Include="Images\Uploads\Products\26\pink1.png" />
+    <Content Include="Images\Uploads\Products\26\Thumbs\pink1.png" />
+    <Content Include="Images\Uploads\Products\27\apple1.jpg" />
+    <Content Include="Images\Uploads\Products\27\Gallery\apple2.jpg" />
+    <Content Include="Images\Uploads\Products\27\Gallery\apple3.jpg" />
+    <Content Include="Images\Uploads\Products\27\Gallery\apple4.jpg" />
+    <Content Include="Images\Uploads\Products\27\Gallery\Thumbs\apple2.jpg" />
+    <Content Include="Images\Uploads\Products\27\Gallery\Thumbs\apple3.jpg" />
+    <Content Include="Images\Uploads\Products\27\Gallery\Thumbs\apple4.jpg" />
+    <Content Include="Images\Uploads\Products\27\Thumbs\apple1.jpg" />
+    <Content Include="Images\Uploads\Products\28\Gallery\grapefruit2.jpg" />
+    <Content Include="Images\Uploads\Products\28\Gallery\grapefruit3.jpg" />
+    <Content Include="Images\Uploads\Products\28\Gallery\grapefruit4.jpg" />
+    <Content Include="Images\Uploads\Products\28\Gallery\Thumbs\grapefruit2.jpg" />
+    <Content Include="Images\Uploads\Products\28\Gallery\Thumbs\grapefruit3.jpg" />
+    <Content Include="Images\Uploads\Products\28\Gallery\Thumbs\grapefruit4.jpg" />
+    <Content Include="Images\Uploads\Products\28\grapefruit1.jpg" />
+    <Content Include="Images\Uploads\Products\28\Thumbs\grapefruit1.jpg" />
+    <Content Include="Images\Uploads\Products\29\Gallery\grapes2.jpg" />
+    <Content Include="Images\Uploads\Products\29\Gallery\grapes3.jpg" />
+    <Content Include="Images\Uploads\Products\29\Gallery\grapes4.jpg" />
+    <Content Include="Images\Uploads\Products\29\Gallery\Thumbs\grapes2.jpg" />
+    <Content Include="Images\Uploads\Products\29\Gallery\Thumbs\grapes3.jpg" />
+    <Content Include="Images\Uploads\Products\29\Gallery\Thumbs\grapes4.jpg" />
+    <Content Include="Images\Uploads\Products\29\grapes1.jpg" />
+    <Content Include="Images\Uploads\Products\29\Thumbs\grapes1.jpg" />
+    <Content Include="Images\Uploads\Products\30\Gallery\mand2.jpg" />
+    <Content Include="Images\Uploads\Products\30\Gallery\mand3.jpg" />
+    <Content Include="Images\Uploads\Products\30\Gallery\mand4.jpg" />
+    <Content Include="Images\Uploads\Products\30\Gallery\Thumbs\mand2.jpg" />
+    <Content Include="Images\Uploads\Products\30\Gallery\Thumbs\mand3.jpg" />
+    <Content Include="Images\Uploads\Products\30\Gallery\Thumbs\mand4.jpg" />
+    <Content Include="Images\Uploads\Products\30\mand1.jpg" />
+    <Content Include="Images\Uploads\Products\30\Thumbs\mand1.jpg" />
+    <Content Include="Images\Uploads\Products\31\Gallery\orange2.jpg" />
+    <Content Include="Images\Uploads\Products\31\Gallery\orange3.jpg" />
+    <Content Include="Images\Uploads\Products\31\Gallery\orange4.jpg" />
+    <Content Include="Images\Uploads\Products\31\Gallery\Thumbs\orange2.jpg" />
+    <Content Include="Images\Uploads\Products\31\Gallery\Thumbs\orange3.jpg" />
+    <Content Include="Images\Uploads\Products\31\Gallery\Thumbs\orange4.jpg" />
+    <Content Include="Images\Uploads\Products\31\orange1.jpg" />
+    <Content Include="Images\Uploads\Products\31\Thumbs\orange1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -584,7 +712,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -610,6 +740,19 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Cart\PaypalPartial.cshtml" />
     <Content Include="Views\Account\Orders.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResendEmailConfirmationLink.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\ShowMsg.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="fileman\" />
@@ -621,6 +764,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801210749189_Identity.resx">
+      <DependentUpon>201801210749189_Identity.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

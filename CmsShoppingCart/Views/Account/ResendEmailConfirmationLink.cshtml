@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "Please confirm your email";
+}
+
+<h2>@ViewBag.ErrorMessage</h2>
+<p>Request new email verification by clicking @Html.ActionLink("here","ResendConfirmationEmail","Account",new { email=ViewBag.Email},null)</p>
+

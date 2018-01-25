@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,20 +21,32 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @Html.Action("PagesMenuPartial", "Pages");
+                    @Html.Action("PagesMenuPartial", "Pages")
                     @if (Request.IsAuthenticated)
                     {
-                        <li><a href="/account/logout">Logout</a></li>
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                </li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                            </ul>
+                        }
                     }
                     else
                     {
                         if (ViewBag.Title == "Login")
                         {
-                            <li class="active"><a href="/account/login">Login</a></li>
+                            @Html.ActionLink("Log in", "Login", "Account", routeValues: new { returnUrl = this.Request.Url}, htmlAttributes: new { id = "loginLink", @class="active" })
+                            //<li class="active"><a href="/account/login">Login</a></li>
                         }
                         else
                         {
-                            <li><a href="/account/login">Login</a></li>
+                            @Html.ActionLink("Log in", "Login", "Account", routeValues: new { returnUrl = this.Request.Url }, htmlAttributes: new { id = "loginLink" })
+                            //<li><a href="/account/login">Login</a></li>
                         }
                     }
 

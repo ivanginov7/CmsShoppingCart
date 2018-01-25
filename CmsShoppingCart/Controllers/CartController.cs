@@ -86,7 +86,7 @@ namespace CmsShoppingCart.Controllers
             // Init CartVM
             CartVM model = new CartVM();
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the product
                 ProductDTO product = db.Products.Find(id);
@@ -140,7 +140,7 @@ namespace CmsShoppingCart.Controllers
             // Init cart list
             List<CartVM> cart = Session["cart"] as List<CartVM>;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get cartVM from list
                 CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
@@ -163,7 +163,7 @@ namespace CmsShoppingCart.Controllers
             // Init cart
             List<CartVM> cart = Session["cart"] as List<CartVM>;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get model from list
                 CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
@@ -194,7 +194,7 @@ namespace CmsShoppingCart.Controllers
             // Init cart list
             List<CartVM> cart = Session["cart"] as List<CartVM>;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get model from list
                 CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
@@ -224,14 +224,14 @@ namespace CmsShoppingCart.Controllers
 
             int orderId = 0;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Init OrderDTO
                 OrderDTO orderDTO = new OrderDTO();
 
                 // Get user id
-                var q = db.Users.FirstOrDefault(x => x.Username == username);
-                int userId = q.Id;
+                var q = db.Users.FirstOrDefault(x => x.UserName == username);
+                string userId = q.Id;
 
                 // Add to OrderDTO and save
                 orderDTO.UserId = userId;

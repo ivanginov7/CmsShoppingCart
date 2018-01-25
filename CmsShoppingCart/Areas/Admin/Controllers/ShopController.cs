@@ -21,7 +21,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare a list of models
             List<CategoryVM> categoryVMList;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Init the list
                 categoryVMList = db.Categories
@@ -42,7 +42,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare id
             string id;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Check that the category name is unique
                 if (db.Categories.Any(x => x.Name == catName))
@@ -72,7 +72,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         [HttpPost]
         public void ReorderCategories(int[] id)
         {
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Set initial count
                 int count = 1;
@@ -97,7 +97,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         // GET: Admin/Shop/DeleteCategory/id
         public ActionResult DeleteCategory(int id)
         {
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the category
                 CategoryDTO dto = db.Categories.Find(id);
@@ -117,7 +117,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         [HttpPost]
         public string RenameCategory(string newCatName, int id)
         {
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Check category name is unique
                 if (db.Categories.Any(x => x.Name == newCatName))
@@ -146,7 +146,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             ProductVM model = new ProductVM();
 
             // Add select list of categories to model
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
             }
@@ -162,7 +162,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Check model state
             if (! ModelState.IsValid)
             {
-                using (Db db = new Db())
+                using (ApplicationDbContext db = new ApplicationDbContext())
                 {
                     model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
                     return View(model);
@@ -170,7 +170,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             }
 
             // Make sure product name is unique
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 if (db.Products.Any(x => x.Name == model.Name))
                 {
@@ -184,7 +184,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             int id;
 
             // Init and save productDTO
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 ProductDTO product = new ProductDTO();
 
@@ -247,7 +247,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     ext != "image/x-png" && 
                     ext != "image/png")
                 {
-                    using (Db db = new Db())
+                    using (ApplicationDbContext db = new ApplicationDbContext())
                     {
                         model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
                         ModelState.AddModelError("", "The image was not uploaded - wrong image extension.");
@@ -259,7 +259,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 string imageName = file.FileName;
 
                 // Save image name to DTO
-                using (Db db = new Db())
+                using (ApplicationDbContext db = new ApplicationDbContext())
                 {
                     ProductDTO dto = db.Products.Find(id);
                     dto.ImageName = imageName;
@@ -295,7 +295,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Set page number
             var pageNumber = page ?? 1;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Init the list
                 listOfProductVM = db.Products.ToArray()
@@ -325,7 +325,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare productVM
             ProductVM model;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the product
                 ProductDTO dto = db.Products.Find(id);
@@ -359,7 +359,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             int id = model.Id;
 
             // Populate categories select list and gallery images
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
             }
@@ -373,7 +373,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             }
 
             // Make sure product name is unique
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 if (db.Products.Where(x => x.Id != id).Any(x => x.Name == model.Name))
                 {
@@ -383,7 +383,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             }
 
             // Update product
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 ProductDTO dto = db.Products.Find(id);
 
@@ -419,7 +419,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     ext != "image/x-png" &&
                     ext != "image/png")
                 {
-                    using (Db db = new Db())
+                    using (ApplicationDbContext db = new ApplicationDbContext())
                     {
                         ModelState.AddModelError("", "The image was not uploaded - wrong image extension.");
                         return View(model);
@@ -447,7 +447,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
 
                 string imageName = file.FileName;
 
-                using (Db db = new Db())
+                using (ApplicationDbContext db = new ApplicationDbContext())
                 {
                     ProductDTO dto = db.Products.Find(id);
                     dto.ImageName = imageName;
@@ -477,7 +477,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         public ActionResult DeleteProduct(int id)
         {
             // Delete product from DB
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 ProductDTO dto = db.Products.Find(id);
                 db.Products.Remove(dto);
@@ -551,7 +551,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Init list of OrdersForAdminVM
             List<OrdersForAdminVM> ordersForAdmin = new List<OrdersForAdminVM>();
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Init list of OrderVM
                 List<OrderVM> orders = db.Orders.ToArray().Select(x => new OrderVM(x)).ToList();
@@ -569,8 +569,8 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     List<OrderDetailsDTO> orderDetailsList = db.OrderDetails.Where(X => X.OrderId == order.OrderId).ToList();
 
                     // Get username
-                    UserDTO user = db.Users.Where(x => x.Id == order.UserId).FirstOrDefault();
-                    string username = user.Username;
+                    ApplicationUser user = db.Users.Where(x => x.Id == order.UserId).FirstOrDefault();
+                    string username = user.UserName;
 
                     // Loop through list of OrderDetailsDTO
                     foreach (var orderDetails in orderDetailsList)

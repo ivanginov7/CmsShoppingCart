@@ -23,7 +23,7 @@ namespace CmsShoppingCart.Controllers
             List<CategoryVM> categoryVMList;
 
             // Init the list
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 categoryVMList = db.Categories.ToArray().OrderBy(x => x.Sorting).Select(x => new CategoryVM(x)).ToList();
             }
@@ -38,7 +38,7 @@ namespace CmsShoppingCart.Controllers
             // Declare a list of ProductVM
             List<ProductVM> productVMList;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get category id
                 CategoryDTO categoryDTO = db.Categories.Where(x => x.Slug == name).FirstOrDefault();
@@ -67,7 +67,7 @@ namespace CmsShoppingCart.Controllers
             // Init product id
             int id = 0;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Check if product exists
                 if (! db.Products.Any(x => x.Slug.Equals(name)))

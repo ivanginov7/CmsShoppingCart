@@ -11,6 +11,7 @@ namespace CmsShoppingCart.Controllers
     public class PagesController : Controller
     {
         // GET: Index/{page}
+        [AllowAnonymous]
         public ActionResult Index(string page = "")
         {
             // Get/set page slug
@@ -22,38 +23,40 @@ namespace CmsShoppingCart.Controllers
             PageDTO dto;
 
             // Check if page exists
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 if (! db.Pages.Any(x => x.Slug.Equals(page)))
                 {
-                    return RedirectToAction("Index", new { page = "" });
+                    return HttpNotFound();
+                    //return RedirectToAction("Index", new { page = "" });
+                }
+                else
+                {
+                    dto = db.Pages.Where(x => x.Slug == page).FirstOrDefault();
+                    
+                    // Set page title
+                    ViewBag.PageTitle = dto.Title;
+
+                    // Check for sidebar
+                    if (dto.HasSidebar == true)
+                    {
+                        ViewBag.Sidebar = "Yes";
+                    }
+                    else
+                    {
+                        ViewBag.Sidebar = "No";
+                    }
+
+                    // Init model
+                    model = new PageVM(dto);
+
+                    // Return view with model
+                    return View(model);
                 }
             }
 
             // Get page DTO
-            using (Db db = new Db())
-            {
-                dto = db.Pages.Where(x => x.Slug == page).FirstOrDefault();
-            }
-
-            // Set page title
-            ViewBag.PageTitle = dto.Title;
-
-            // Check for sidebar
-            if (dto.HasSidebar == true)
-            {
-                ViewBag.Sidebar = "Yes";
-            }
-            else
-            {
-                ViewBag.Sidebar = "No";
-            }
-
-            // Init model
-            model = new PageVM(dto);
-
-            // Return view with model
-            return View(model);
+           
         }
         
         public ActionResult PagesMenuPartial()
@@ -62,7 +65,7 @@ namespace CmsShoppingCart.Controllers
             List<PageVM> pageVMList;
 
             // Get all pages except home
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 pageVMList = db.Pages.ToArray().OrderBy(x => x.Sorting).Where(x => x.Slug != "home").Select(x => new PageVM(x)).ToList();
             }
@@ -76,7 +79,7 @@ namespace CmsShoppingCart.Controllers
             SidebarVM model;
 
             // Init model
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 SidebarDTO dto = db.Sidebar.Find(1);
 

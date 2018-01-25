@@ -17,7 +17,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare list of PageVM
             List<PageVM> pagesList;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Init the list
                 pagesList = db.Pages.ToArray().OrderBy(x => x.Sorting).Select(x => new PageVM(x)).ToList();
@@ -44,7 +44,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 return View(model);
             }
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Declare slug
                 string slug;
@@ -97,7 +97,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare pageVM
             PageVM model;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the page
                 PageDTO dto = db.Pages.Find(id);
@@ -126,7 +126,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 return View(model);
             }
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get page id
                 int id = model.Id;
@@ -183,7 +183,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare PageVM
             PageVM model;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the page
                 PageDTO dto = db.Pages.Find(id);
@@ -205,7 +205,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         // GET: Admin/Pages/DeletePage/id
         public ActionResult DeletePage(int id)
         {
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the page
                 PageDTO dto = db.Pages.Find(id);
@@ -225,7 +225,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         [HttpPost]
         public void ReorderPages(int[] id)
         {
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Set initial count
                 int count = 1;
@@ -254,7 +254,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             // Declare model
             SidebarVM model;
 
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the DTO
                 SidebarDTO dto = db.Sidebar.Find(1);
@@ -271,7 +271,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditSidebar(SidebarVM model)
         {
-            using (Db db = new Db())
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 // Get the DTO
                 SidebarDTO dto = db.Sidebar.Find(1);
